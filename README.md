@@ -1,27 +1,45 @@
-# React + TypeScript + Vite
+# 🚀 GoHrAssist – HR Interview Call Assistant (Demo UI)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+GoHrAssist is a **frontend demo application** that simulates a real-time HR interview call system.  
+It is designed to replicate how recruiters handle incoming candidate calls, conduct interview sessions, and manage accept/reject workflows through an intuitive call-based UI.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🎯 Features
 
-## Expanding the ESLint configuration
+- 📞 Incoming interview call screen simulation
+- ✅ Accept / ❌ Reject call actions
+- ⏱️ Call screen transition with in-call UI
+- 🎧 Clean call interface for HR interview flow
+- 🎨 Modern UI with smooth animations
+- 📱 Responsive layout (desktop-focused demo)
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+---
 
-- Configure the top-level `parserOptions` property like this:
+## 🧠 Use Case
 
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
-```
+This project is built as a **UI demo for HR Assist systems**, where HRs can:
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+- Receive candidate interview calls
+- Accept or reject interview requests
+- Simulate live screening experience
+- Visualize a real-time recruitment call flow
+
+---
+
+## 🛠️ Tech Stack
+
+- React.js
+- TypeScript (if applicable)
+- CSS / SCSS
+- React Icons
+- Vite (or CRA if used)
+
+---
+
+## 📦 Installation
+
+Clone the repository:
+
+```bash
+git clone https://github.com/dishap001/GoHrAssist.git

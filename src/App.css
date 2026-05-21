@@ -1,0 +1,307 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family:
+    -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
+}
+
+body {
+  min-height: 100vh;
+  /* background:
+    radial-gradient(circle at top, #1f2937 0%, #050505 70%); */
+
+    background: white;
+  overflow: hidden;
+}
+
+.app {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+/* PHONE FRAME */
+
+.phone-frame {
+  width: 340px;
+  height: 620px;
+  background: #0d0d0d;
+  border-radius: 44px;
+  padding: 9px;
+  position: relative;
+  overflow: hidden;
+
+  box-shadow:
+    0 30px 80px rgba(0, 0, 0, 0.65),
+    inset 0 0 0 2px rgba(255, 255, 255, 0.05);
+}
+
+/* Dynamic Island */
+
+.phone-frame::before {
+  content: "";
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 110px;
+  height: 30px;
+  border-radius: 999px;
+  background: #000;
+  z-index: 100;
+}
+
+/* SCREEN */
+
+.screen {
+  width: 100%;
+  height: 100%;
+  border-radius: 36px;
+  overflow: hidden;
+  position: relative;
+
+  background:
+    radial-gradient(circle at top, #2c2c2c 0%, #121212 45%, #000 100%);
+
+  color: white;
+}
+
+/* TOP BAR */
+
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  padding: 18px 22px;
+  font-size: 12px;
+  font-weight: 600;
+  opacity: 0.95;
+}
+
+/* COMMON CONTAINER */
+
+.incoming-container,
+.active-call-container {
+  height: calc(100% - 50px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 18px;
+}
+
+/* CALLER */
+
+.caller-label {
+  margin-top: 16px;
+  font-size: 13px;
+  opacity: 0.7;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+
+.caller-name {
+  margin-top: 10px;
+  font-size: 34px;
+  font-weight: 600;
+  letter-spacing: -1px;
+}
+
+/* AVATAR */
+
+.avatar {
+  margin-top: 35px;
+}
+
+.avatar-circle {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.12),
+      rgba(255, 255, 255, 0.03)
+    );
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+
+  backdrop-filter: blur(20px);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  box-shadow:
+    inset 0 0 25px rgba(255, 255, 255, 0.05),
+    0 20px 40px rgba(0, 0, 0, 0.45);
+}
+
+.avatar-circle span {
+  font-size: 58px;
+}
+
+/* CALLING TEXT */
+
+.calling-text {
+  margin-top: 26px;
+  font-size: 13px;
+  letter-spacing: 4px;
+  opacity: 0.75;
+  animation: pulse 1.5s infinite;
+}
+
+/* BUTTONS */
+
+.incoming-actions {
+  display: flex;
+  gap: 70px;
+  margin-top: auto;
+  margin-bottom: 55px;
+}
+
+.call-btn,
+.end-call-btn {
+  width: 76px;
+  height: 76px;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+
+  font-size: 28px;
+  color: white;
+
+  transition: all 0.25s ease;
+
+  box-shadow:
+    0 12px 30px rgba(0, 0, 0, 0.4),
+    inset 0 -5px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* .call-btn:hover,
+.end-call-btn:hover {
+  transform: scale(1.08);
+} */
+
+.accept {
+  background: linear-gradient(145deg, #32d74b, #28c840);
+}
+
+.reject,
+.end-call-btn {
+  background: linear-gradient(145deg, #ff453a, #ff3b30);
+}
+
+/* TIMER */
+
+.timer {
+  margin-top: 14px;
+  font-size: 20px;
+  letter-spacing: 3px;
+  opacity: 0.9;
+}
+
+/* OPTIONS */
+
+.call-options {
+  width: 100%;
+  margin-top: 45px;
+
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px 16px;
+
+  padding: 0 10px;
+}
+
+.option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+/* IOS ICONS */
+
+.option-icon {
+  width: 62px;
+  height: 62px;
+  border-radius: 50%;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.14),
+      rgba(255, 255, 255, 0.05)
+    );
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+
+  backdrop-filter: blur(16px);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 24px;
+
+  transition: all 0.25s ease;
+}
+
+.option-icon:hover {
+  transform: translateY(-4px);
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.2),
+      rgba(255, 255, 255, 0.08)
+    );
+}
+
+.option span {
+  font-size: 12px;
+  opacity: 0.85;
+}
+
+/* END CALL BUTTON */
+
+.end-call-btn {
+  margin-top: auto;
+  margin-bottom: 32px;
+  /* transform: rotate(135deg); */
+}
+
+/* HOME BAR */
+
+.screen::after {
+  content: "";
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+
+  width: 120px;
+  height: 5px;
+  border-radius: 999px;
+
+  background: rgba(255, 255, 255, 0.85);
+}
+
+/* ANIMATION */
+
+@keyframes pulse {
+  0% {
+    opacity: 0.45;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0.45;
+  }
+}

@@ -1,8 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import "./App.css";
-
-// IMPORT AUDIO
-import callAudio from "./assets/VBDEMO.mp3";
+import hrAudio from "./assets/HR.mp3";
+import interviewerAudio from "./assets/Interviewer.mp3";
 import { FaPhoneAlt, FaPhoneSlash } from "react-icons/fa";
 
 const formatTime = (seconds: number) => {
@@ -18,10 +17,11 @@ const formatTime = (seconds: number) => {
 const App = () => {
   const [callAccepted, setCallAccepted] = useState(false);
   const [callTime, setCallTime] = useState(0);
+  const [isInterviewer, setIsInterviewer] = useState(false);
 
   // AUDIO REF
   const audioRef = useRef<HTMLAudioElement | null>(null);
-
+  const [dropdownOpen, setDropdownOpen] = useState(false);
   useEffect(() => {
     let timer: number;
 
@@ -62,14 +62,62 @@ const App = () => {
       audioRef.current.currentTime = 0;
     }
   };
+  const getCurrentAudio = () => {
+    return isInterviewer ? interviewerAudio : hrAudio;
+  };
+  useEffect(() => {
+    if (!audioRef.current) return;
+
+    audioRef.current.pause();
+    audioRef.current.currentTime = 0;
+
+    if (callAccepted) {
+      audioRef.current.play().catch((err) => {
+        console.log("Audio play blocked:", err);
+      });
+    }
+  }, [isInterviewer, callAccepted]);
 
   return (
     <div className="app">
+      <div className="caller-dropdown">
+        <button
+          className="dropdown-btn"
+          onClick={() => setDropdownOpen((prev) => !prev)}
+        >
+          {isInterviewer ? "Inquire interview" : "Attend interview"} ▼
+        </button>
+
+        {dropdownOpen && (
+          <div className="dropdown-menu">
+            <div
+              className={`dropdown-item ${!isInterviewer ? "active" : ""}`}
+              onClick={() => {
+                setIsInterviewer(false);
+                setDropdownOpen(false);
+              }}
+            >
+              Attend interview
+            </div>
+
+            <div
+              className={`dropdown-item ${isInterviewer ? "active" : ""}`}
+              onClick={() => {
+                setIsInterviewer(true);
+                setDropdownOpen(false);
+              }}
+            >
+              Inquire interview
+            </div>
+          </div>
+        )}
+      </div>
       {/* AUDIO ELEMENT */}
-      <audio ref={audioRef} src={callAudio} />
+      <audio ref={audioRef} src={getCurrentAudio()} />
 
       <div className="phone-frame">
         <div className="screen">
+
           {!callAccepted ? (
             <>
               {/* Incoming Call Screen */}
@@ -81,7 +129,9 @@ const App = () => {
               <div className="incoming-container">
                 <p className="caller-label">Incoming Call</p>
 
-                <h1 className="caller-name">Trellis HR</h1>
+                <h1 className="caller-name">
+                  {isInterviewer ? "Sarah Jose" : "Trellis HR"}
+                </h1>
 
                 <div className="avatar">
                   <div className="avatar-circle">
@@ -115,7 +165,9 @@ const App = () => {
               <div className="active-call-container">
                 <p className="caller-label">Connected</p>
 
-                <h1 className="caller-name">Trellis HR</h1>
+                <h1 className="caller-name">
+                  {isInterviewer ? "Sarah Jose" : "Trellis HR"}
+                </h1>
 
                 <p className="timer">{formatTime(callTime)}</p>
 

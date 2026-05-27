@@ -78,6 +78,22 @@ const App = () => {
     }
   }, [isInterviewer, callAccepted]);
 
+  useEffect(() => {
+  const audio = audioRef.current;
+
+  if (!audio) return;
+
+  const handleAudioEnd = () => {
+    handleEndCall();
+  };
+
+  audio.addEventListener("ended", handleAudioEnd);
+
+  return () => {
+    audio.removeEventListener("ended", handleAudioEnd);
+  };
+}, []);
+
   return (
     <div className="app">
       <div className="caller-dropdown">
@@ -130,7 +146,7 @@ const App = () => {
                 <p className="caller-label">Incoming Call</p>
 
                 <h1 className="caller-name">
-                  {isInterviewer ? "Sarah Jose" : "Trellis HR"}
+                  {isInterviewer ? "Neha Sinha" : "Trellis HR"}
                 </h1>
 
                 <div className="avatar">
@@ -166,7 +182,7 @@ const App = () => {
                 <p className="caller-label">Connected</p>
 
                 <h1 className="caller-name">
-                  {isInterviewer ? "Sarah Jose" : "Trellis HR"}
+                  {isInterviewer ? "Neha Sinha" : "Trellis HR"}
                 </h1>
 
                 <p className="timer">{formatTime(callTime)}</p>

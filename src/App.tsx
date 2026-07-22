@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import "./App.css";
-import hrAudio from "./assets/HR.mp3";
+// import hrAudio from "./assets/HR.mp3";
+import AttendInterview from "./assets/VoiseAssistantDemoAttend.mp3";
 import interviewerAudio from "./assets/Interviewer.mp3";
 import { FaPhoneAlt, FaPhoneSlash } from "react-icons/fa";
 
@@ -63,7 +64,8 @@ const App = () => {
     }
   };
   const getCurrentAudio = () => {
-    return isInterviewer ? interviewerAudio : hrAudio;
+  //  return isInterviewer ? interviewerAudio : hrAudio;
+    return isInterviewer ? interviewerAudio : AttendInterview;
   };
   useEffect(() => {
     if (!audioRef.current) return;
@@ -143,10 +145,10 @@ const App = () => {
               </div>
 
               <div className="incoming-container">
-                <p className="caller-label">Incoming Call</p>
+                <p className="caller-label">Placing Call</p>
 
                 <h1 className="caller-name">
-                  {isInterviewer ? "Neha Sinha" : "Trellis HR"}
+                  {isInterviewer ? "Neha Sinha" : "Trellis Support"}
                 </h1>
 
                 <div className="avatar">
@@ -182,7 +184,7 @@ const App = () => {
                 <p className="caller-label">Connected</p>
 
                 <h1 className="caller-name">
-                  {isInterviewer ? "Neha Sinha" : "Trellis HR"}
+                  {isInterviewer ? "Neha Sinha" : "Trellis Support"}
                 </h1>
 
                 <p className="timer">{formatTime(callTime)}</p>

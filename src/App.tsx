@@ -64,7 +64,7 @@ const App = () => {
     }
   };
   const getCurrentAudio = () => {
-  //  return isInterviewer ? interviewerAudio : hrAudio;
+    //  return isInterviewer ? interviewerAudio : hrAudio;
     return isInterviewer ? interviewerAudio : AttendInterview;
   };
   useEffect(() => {
@@ -81,20 +81,20 @@ const App = () => {
   }, [isInterviewer, callAccepted]);
 
   useEffect(() => {
-  const audio = audioRef.current;
+    const audio = audioRef.current;
 
-  if (!audio) return;
+    if (!audio) return;
 
-  const handleAudioEnd = () => {
-    handleEndCall();
-  };
+    const handleAudioEnd = () => {
+      handleEndCall();
+    };
 
-  audio.addEventListener("ended", handleAudioEnd);
+    audio.addEventListener("ended", handleAudioEnd);
 
-  return () => {
-    audio.removeEventListener("ended", handleAudioEnd);
-  };
-}, []);
+    return () => {
+      audio.removeEventListener("ended", handleAudioEnd);
+    };
+  }, []);
 
   return (
     <div className="app">
@@ -103,7 +103,7 @@ const App = () => {
           className="dropdown-btn"
           onClick={() => setDropdownOpen((prev) => !prev)}
         >
-          {isInterviewer ? "Inquire interview" : "Attend interview"} ▼
+          {isInterviewer ? "Inquire interview" : "Support Call"} ▼
         </button>
 
         {dropdownOpen && (
@@ -115,7 +115,7 @@ const App = () => {
                 setDropdownOpen(false);
               }}
             >
-              Attend interview
+              Support Call
             </div>
 
             <div

@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import "./App.css";
 // import hrAudio from "./assets/HR.mp3";
-import AttendInterview from "./assets/VoiseAssistantDemoAttend.mp3";
+// import AttendInterview from "./assets/VoiseAssistantDemoAttend.mp3";
+import AttendInterview from "./assets/BMSDEMO1.mp3";
 import interviewerAudio from "./assets/Interviewer.mp3";
 import { FaPhoneAlt, FaPhoneSlash } from "react-icons/fa";
 

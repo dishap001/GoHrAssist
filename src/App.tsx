@@ -149,7 +149,7 @@ const App = () => {
                 <p className="caller-label">Placing Call</p>
 
                 <h1 className="caller-name">
-                  {isInterviewer ? "Neha Sinha" : "Trellis Support"}
+                  {isInterviewer ? "Neha Sinha" : "Elvora Electronics"}
                 </h1>
 
                 <div className="avatar">
@@ -185,7 +185,7 @@ const App = () => {
                 <p className="caller-label">Connected</p>
 
                 <h1 className="caller-name">
-                  {isInterviewer ? "Neha Sinha" : "Trellis Support"}
+                  {isInterviewer ? "Neha Sinha" : "Elvora Electronics"}
                 </h1>
 
                 <p className="timer">{formatTime(callTime)}</p>

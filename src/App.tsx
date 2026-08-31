@@ -4,6 +4,8 @@ import "./App.css";
 // import AttendInterview from "./assets/VoiseAssistantDemoAttend.mp3";
 import AttendInterview from "./assets/BMSDEMO1.mp3";
 import interviewerAudio from "./assets/Interviewer.mp3";
+import salesCallAudio from "./assets/Sales_Elora.mp3";
+
 import { FaPhoneAlt, FaPhoneSlash } from "react-icons/fa";
 
 const formatTime = (seconds: number) => {
@@ -16,16 +18,51 @@ const formatTime = (seconds: number) => {
   return `${mins}:${secs}`;
 };
 
+type CallType = "support" | "interview" | "sales";
+
 const App = () => {
   const [callAccepted, setCallAccepted] = useState(false);
   const [callTime, setCallTime] = useState(0);
-  const [isInterviewer, setIsInterviewer] = useState(false);
-
-  // AUDIO REF
-  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const [callType, setCallType] = useState<CallType>("support");
   const [dropdownOpen, setDropdownOpen] = useState(false);
+
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+
+  /*
+   * Get audio based on call type.
+   * This is calculated directly from state and doesn't need
+   * to be called from inside a useEffect.
+   */
+  const currentAudio =
+    callType === "interview"
+      ? interviewerAudio
+      : callType === "sales"
+        ? salesCallAudio
+        : AttendInterview;
+
+  /*
+   * Get caller name
+   */
+  const callerName =
+    callType === "interview"
+      ? "Neha Sinha"
+      : "Elvora Electronics";
+
+  /*
+   * Get dropdown label
+   */
+  const callTypeLabel =
+    callType === "interview"
+      ? "Inquire interview"
+      : callType === "sales"
+        ? "Sales Call"
+        : "Support Call";
+
+  /*
+   * Call timer
+   */
   useEffect(() => {
-    let timer: number;
+    let timer: number | undefined;
 
     if (callAccepted) {
       timer = window.setInterval(() => {
@@ -33,61 +70,52 @@ const App = () => {
       }, 1000);
     }
 
-    return () => clearInterval(timer);
+    return () => {
+      if (timer) {
+        clearInterval(timer);
+      }
+    };
   }, [callAccepted]);
 
-  // ACCEPT CALL
-  const handleAcceptCall = async () => {
-    setCallAccepted(true);
-    setCallTime(0);
-
-    // PLAY AUDIO
-    if (audioRef.current) {
-      audioRef.current.currentTime = 0;
-
-      try {
-        await audioRef.current.play();
-      } catch (error) {
-        console.log("Audio play blocked:", error);
-      }
-    }
-  };
-
-  // END CALL
-  const handleEndCall = () => {
-    setCallAccepted(false);
-    setCallTime(0);
-
-    // STOP AUDIO
-    if (audioRef.current) {
-      audioRef.current.pause();
-      audioRef.current.currentTime = 0;
-    }
-  };
-  const getCurrentAudio = () => {
-    //  return isInterviewer ? interviewerAudio : hrAudio;
-    return isInterviewer ? interviewerAudio : AttendInterview;
-  };
+  /*
+   * Play / stop audio whenever:
+   * - call is accepted
+   * - call type changes
+   */
   useEffect(() => {
-    if (!audioRef.current) return;
+    const audio = audioRef.current;
 
-    audioRef.current.pause();
-    audioRef.current.currentTime = 0;
+    if (!audio) return;
 
+    audio.pause();
+    audio.currentTime = 0;
+
+    /*
+     * Update audio source
+     */
+    audio.src = currentAudio;
+
+    /*
+     * Play only when call is active
+     */
     if (callAccepted) {
-      audioRef.current.play().catch((err) => {
-        console.log("Audio play blocked:", err);
+      audio.play().catch((error) => {
+        console.log("Audio play blocked:", error);
       });
     }
-  }, [isInterviewer, callAccepted]);
+  }, [currentAudio, callAccepted]);
 
+  /*
+   * Automatically end call when audio finishes
+   */
   useEffect(() => {
     const audio = audioRef.current;
 
     if (!audio) return;
 
     const handleAudioEnd = () => {
-      handleEndCall();
+      setCallAccepted(false);
+      setCallTime(0);
     };
 
     audio.addEventListener("ended", handleAudioEnd);
@@ -97,59 +125,114 @@ const App = () => {
     };
   }, []);
 
+  /*
+   * Accept call
+   */
+  const handleAcceptCall = () => {
+    setCallTime(0);
+    setCallAccepted(true);
+  };
+
+  /*
+   * End call
+   */
+  const handleEndCall = () => {
+    setCallAccepted(false);
+    setCallTime(0);
+
+    const audio = audioRef.current;
+
+    if (audio) {
+      audio.pause();
+      audio.currentTime = 0;
+    }
+  };
+
+  /*
+   * Change call type
+   */
+  const handleCallTypeChange = (type: CallType) => {
+    /*
+     * End current call first if active
+     */
+    if (callAccepted) {
+      handleEndCall();
+    }
+
+    setCallType(type);
+    setDropdownOpen(false);
+  };
+
   return (
     <div className="app">
+
+      {/* CALL TYPE DROPDOWN */}
       <div className="caller-dropdown">
+
         <button
           className="dropdown-btn"
           onClick={() => setDropdownOpen((prev) => !prev)}
         >
-          {isInterviewer ? "Inquire interview" : "Support Call"} ▼
+          {callTypeLabel} ▼
         </button>
 
         {dropdownOpen && (
           <div className="dropdown-menu">
+
+            {/* SUPPORT CALL */}
             <div
-              className={`dropdown-item ${!isInterviewer ? "active" : ""}`}
-              onClick={() => {
-                setIsInterviewer(false);
-                setDropdownOpen(false);
-              }}
+              className={`dropdown-item ${callType === "support" ? "active" : ""
+                }`}
+              onClick={() => handleCallTypeChange("support")}
             >
               Support Call
             </div>
 
+            {/* INTERVIEW CALL */}
             <div
-              className={`dropdown-item ${isInterviewer ? "active" : ""}`}
-              onClick={() => {
-                setIsInterviewer(true);
-                setDropdownOpen(false);
-              }}
+              className={`dropdown-item ${callType === "interview" ? "active" : ""
+                }`}
+              onClick={() => handleCallTypeChange("interview")}
             >
               Inquire interview
             </div>
+
+            {/* SALES CALL */}
+            <div
+              className={`dropdown-item ${callType === "sales" ? "active" : ""
+                }`}
+              onClick={() => handleCallTypeChange("sales")}
+            >
+              Sales Call
+            </div>
+
           </div>
         )}
       </div>
-      {/* AUDIO ELEMENT */}
-      <audio ref={audioRef} src={getCurrentAudio()} />
+
+      {/* AUDIO */}
+      <audio ref={audioRef} src={currentAudio} />
 
       <div className="phone-frame">
         <div className="screen">
 
           {!callAccepted ? (
             <>
-              {/* Incoming Call Screen */}
+              {/* INCOMING CALL SCREEN */}
+
               <div className="top-bar">
                 <span>12:39 PM</span>
                 <span>📶 🔋</span>
               </div>
 
               <div className="incoming-container">
-                <p className="caller-label">Placing Call</p>
+
+                <p className="caller-label">
+                  Incoming Call
+                </p>
 
                 <h1 className="caller-name">
-                  {isInterviewer ? "Neha Sinha" : "Elvora Electronics"}
+                  {callerName}
                 </h1>
 
                 <div className="avatar">
@@ -158,39 +241,57 @@ const App = () => {
                   </div>
                 </div>
 
-                <p className="calling-text">CALLING...</p>
+                <p className="calling-text">
+                  INCOMING CALL
+                </p>
 
                 <div className="incoming-actions">
 
-                  <button className="call-btn accept" onClick={handleAcceptCall}>
+                  {/* ACCEPT */}
+                  <button
+                    className="call-btn accept"
+                    onClick={handleAcceptCall}
+                  >
                     <FaPhoneAlt />
                   </button>
 
-                  <button className="call-btn reject" onClick={handleEndCall}>
+                  {/* REJECT */}
+                  <button
+                    className="call-btn reject"
+                    onClick={handleEndCall}
+                  >
                     <FaPhoneSlash />
                   </button>
+
                 </div>
 
               </div>
             </>
           ) : (
             <>
-              {/* Active Call Screen */}
+              {/* ACTIVE CALL SCREEN */}
+
               <div className="top-bar">
                 <span>12:39 PM</span>
                 <span>📶 🔋</span>
               </div>
 
               <div className="active-call-container">
-                <p className="caller-label">Connected</p>
+
+                <p className="caller-label">
+                  Connected
+                </p>
 
                 <h1 className="caller-name">
-                  {isInterviewer ? "Neha Sinha" : "Elvora Electronics"}
+                  {callerName}
                 </h1>
 
-                <p className="timer">{formatTime(callTime)}</p>
+                <p className="timer">
+                  {formatTime(callTime)}
+                </p>
 
                 <div className="call-options">
+
                   <div className="option">
                     <div className="option-icon">🔇</div>
                     <span>Mute</span>
@@ -220,19 +321,25 @@ const App = () => {
                     <div className="option-icon">⌨</div>
                     <span>Keypad</span>
                   </div>
+
                 </div>
 
-
-                <button className="end-call-btn" onClick={handleEndCall}>
+                {/* END CALL */}
+                <button
+                  className="end-call-btn"
+                  onClick={handleEndCall}
+                >
                   <FaPhoneSlash />
                 </button>
+
               </div>
             </>
           )}
+
         </div>
       </div>
     </div>
   );
-}
+};
 
 export default App;

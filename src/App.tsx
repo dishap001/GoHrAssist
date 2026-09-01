@@ -4,7 +4,7 @@ import "./App.css";
 // import AttendInterview from "./assets/VoiseAssistantDemoAttend.mp3";
 import AttendInterview from "./assets/BMSDEMO1.mp3";
 import interviewerAudio from "./assets/Interviewer.mp3";
-import salesCallAudio from "./assets/Sales_Elora.mp3";
+import salesCallAudio from "./assets/Sales_Elvora.mp3";
 
 import { FaPhoneAlt, FaPhoneSlash } from "react-icons/fa";
 

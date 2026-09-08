@@ -5,6 +5,7 @@ import "./App.css";
 import AttendInterview from "./assets/BMSDEMO1.mp3";
 import interviewerAudio from "./assets/Interviewer.mp3";
 import salesCallAudio from "./assets/Sales_Elvora.mp3";
+import inquiryCallAudio from "./assets/Cascade_Demo.mp3";
 
 import { FaPhoneAlt, FaPhoneSlash } from "react-icons/fa";
 
@@ -18,7 +19,7 @@ const formatTime = (seconds: number) => {
   return `${mins}:${secs}`;
 };
 
-type CallType = "support" | "interview" | "sales";
+type CallType = "support" | "interview" | "sales" | "inquiry";
 
 const App = () => {
   const [callAccepted, setCallAccepted] = useState(false);
@@ -38,7 +39,9 @@ const App = () => {
       ? interviewerAudio
       : callType === "sales"
         ? salesCallAudio
-        : AttendInterview;
+        : callType === "inquiry"
+          ? inquiryCallAudio
+          : AttendInterview;
 
   /*
    * Get caller name
@@ -46,7 +49,9 @@ const App = () => {
   const callerName =
     callType === "interview"
       ? "Neha Sinha"
-      : "Elvora Electronics";
+      : callType === "inquiry"
+        ? "Cascade Training"
+        : "Elvora Electronics";
 
   /*
    * Get dropdown label
@@ -56,7 +61,9 @@ const App = () => {
       ? "Inquire interview"
       : callType === "sales"
         ? "Sales Call"
-        : "Support Call";
+        : callType === "inquiry"
+          ? "Inquiry Call"
+          : "Support Call";
 
   /*
    * Call timer
@@ -205,6 +212,14 @@ const App = () => {
             >
               Sales Call
             </div>
+            {/* INQUIRY CALL */}
+            <div
+              className={`dropdown-item ${callType === "inquiry" ? "active" : ""
+                }`}
+              onClick={() => handleCallTypeChange("inquiry")}
+            >
+              Inquiry Call
+            </div>
 
           </div>
         )}
@@ -227,9 +242,11 @@ const App = () => {
 
               <div className="incoming-container">
 
-                <p className="caller-label">
-                  Incoming Call
-                </p>
+                {callType !== "inquiry" && (
+                  <p className="caller-label">
+                    Incoming Call
+                  </p>
+                )}
 
                 <h1 className="caller-name">
                   {callerName}
@@ -241,9 +258,11 @@ const App = () => {
                   </div>
                 </div>
 
-                <p className="calling-text">
-                  INCOMING CALL
-                </p>
+                {callType !== "inquiry" && (
+                  <p className="caller-label">
+                    Incoming Call
+                  </p>
+                )}
 
                 <div className="incoming-actions">
 

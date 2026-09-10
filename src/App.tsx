@@ -253,7 +253,7 @@ const App = () => {
                 }`}
               onClick={() => handleCallTypeChange("goaVista")}
             >
-              Goa Vista
+              Flight reshedule
             </div>
 
           </div>

@@ -7,7 +7,7 @@ import interviewerAudio from "./assets/Interviewer.mp3";
 import salesCallAudio from "./assets/Sales_Elvora.mp3";
 import inquiryCallAudio from "./assets/Cascade_Demo.mp3";
 import schoolInquiryAudio from "./assets/School_Inquiry.mp3";
-
+import goaVistaAudio from "./assets/Goa_Vista.mp3";
 import { FaPhoneAlt, FaPhoneSlash } from "react-icons/fa";
 
 const formatTime = (seconds: number) => {
@@ -25,7 +25,8 @@ type CallType =
   | "interview"
   | "sales"
   | "inquiry"
-  | "schoolInquiry";
+  | "schoolInquiry"
+  | "goaVista";
 
 const App = () => {
   const [callAccepted, setCallAccepted] = useState(false);
@@ -49,19 +50,23 @@ const App = () => {
           ? inquiryCallAudio
           : callType === "schoolInquiry"
             ? schoolInquiryAudio
-            : AttendInterview;
+            : callType === "goaVista"
+              ? goaVistaAudio
+              : AttendInterview;
 
   /*
    * Get caller name
    */
-const callerName =
-  callType === "interview"
-    ? "Neha Sinha"
-    : callType === "inquiry"
-      ? "Cascade Training"
-      : callType === "schoolInquiry"
-        ? "Greenfield International School"
-        : "Elvora Electronics";
+  const callerName =
+    callType === "interview"
+      ? "Neha Sinha"
+      : callType === "inquiry"
+        ? "Cascade Training"
+        : callType === "schoolInquiry"
+          ? "Greenfield International School"
+          : callType === "goaVista"
+            ? "Goa Vista"
+            : "Elvora Electronics";
 
   /*
    * Get dropdown label
@@ -75,7 +80,9 @@ const callerName =
           ? "Inquiry Call"
           : callType === "schoolInquiry"
             ? "School Inquiry"
-            : "Support Call";
+            : callType === "goaVista"
+              ? "Goa Vista"
+              : "Support Call";
 
   /*
    * Call timer
@@ -240,6 +247,14 @@ const callerName =
             >
               School Inquiry
             </div>
+            {/* GOA VISTA */}
+            <div
+              className={`dropdown-item ${callType === "goaVista" ? "active" : ""
+                }`}
+              onClick={() => handleCallTypeChange("goaVista")}
+            >
+              Goa Vista
+            </div>
 
           </div>
         )}
@@ -262,11 +277,13 @@ const callerName =
 
               <div className="incoming-container">
 
-                {callType !== "inquiry" && callType !== "schoolInquiry" && (
-                  <p className="caller-label">
-                    Incoming Call
-                  </p>
-                )}
+                {callType !== "inquiry" &&
+                  callType !== "schoolInquiry" &&
+                  callType !== "goaVista" && (
+                    <p className="caller-label">
+                      Incoming Call
+                    </p>
+                  )}
 
                 <h1 className="caller-name">
                   {callerName}
@@ -278,11 +295,13 @@ const callerName =
                   </div>
                 </div>
 
-                {callType !== "inquiry" && callType !== "schoolInquiry" && (
-                  <p className="caller-label">
-                    Incoming Call
-                  </p>
-                )}
+                {callType !== "inquiry" &&
+                  callType !== "schoolInquiry" &&
+                  callType !== "goaVista" && (
+                    <p className="caller-label">
+                      Incoming Call
+                    </p>
+                  )}
 
                 <div className="incoming-actions">
 

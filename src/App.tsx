@@ -71,19 +71,18 @@ const App = () => {
   /*
    * Get dropdown label
    */
-  const callTypeLabel =
-    callType === "interview"
-      ? "Inquire interview"
-      : callType === "sales"
-        ? "Sales Call"
-        : callType === "inquiry"
-          ? "Inquiry Call"
-          : callType === "schoolInquiry"
-            ? "School Inquiry"
-            : callType === "goaVista"
-              ? "Goa Vista"
-              : "Support Call";
-
+ const callTypeLabel =
+  callType === "interview"
+    ? "Inquire interview"
+    : callType === "sales"
+      ? "Sales Call"
+      : callType === "inquiry"
+        ? "Inquiry Call"
+        : callType === "schoolInquiry"
+          ? "School Inquiry"
+          : callType === "goaVista"
+            ? "Flight Reschedule"
+            : "Support Call";
   /*
    * Call timer
    */

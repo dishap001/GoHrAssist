@@ -6,6 +6,7 @@ import AttendInterview from "./assets/BMSDEMO1.mp3";
 import interviewerAudio from "./assets/Interviewer.mp3";
 import salesCallAudio from "./assets/Sales_Elvora.mp3";
 import inquiryCallAudio from "./assets/Cascade_Demo.mp3";
+import schoolInquiryAudio from "./assets/School_Inquiry.mp3";
 
 import { FaPhoneAlt, FaPhoneSlash } from "react-icons/fa";
 
@@ -19,7 +20,12 @@ const formatTime = (seconds: number) => {
   return `${mins}:${secs}`;
 };
 
-type CallType = "support" | "interview" | "sales" | "inquiry";
+type CallType =
+  | "support"
+  | "interview"
+  | "sales"
+  | "inquiry"
+  | "schoolInquiry";
 
 const App = () => {
   const [callAccepted, setCallAccepted] = useState(false);
@@ -41,16 +47,20 @@ const App = () => {
         ? salesCallAudio
         : callType === "inquiry"
           ? inquiryCallAudio
-          : AttendInterview;
+          : callType === "schoolInquiry"
+            ? schoolInquiryAudio
+            : AttendInterview;
 
   /*
    * Get caller name
    */
-  const callerName =
-    callType === "interview"
-      ? "Neha Sinha"
-      : callType === "inquiry"
-        ? "Cascade Training"
+const callerName =
+  callType === "interview"
+    ? "Neha Sinha"
+    : callType === "inquiry"
+      ? "Cascade Training"
+      : callType === "schoolInquiry"
+        ? "Greenfield International School"
         : "Elvora Electronics";
 
   /*
@@ -63,7 +73,9 @@ const App = () => {
         ? "Sales Call"
         : callType === "inquiry"
           ? "Inquiry Call"
-          : "Support Call";
+          : callType === "schoolInquiry"
+            ? "School Inquiry"
+            : "Support Call";
 
   /*
    * Call timer
@@ -220,6 +232,14 @@ const App = () => {
             >
               Inquiry Call
             </div>
+            {/* SCHOOL INQUIRY CALL */}
+            <div
+              className={`dropdown-item ${callType === "schoolInquiry" ? "active" : ""
+                }`}
+              onClick={() => handleCallTypeChange("schoolInquiry")}
+            >
+              School Inquiry
+            </div>
 
           </div>
         )}
@@ -242,7 +262,7 @@ const App = () => {
 
               <div className="incoming-container">
 
-                {callType !== "inquiry" && (
+                {callType !== "inquiry" && callType !== "schoolInquiry" && (
                   <p className="caller-label">
                     Incoming Call
                   </p>
@@ -258,7 +278,7 @@ const App = () => {
                   </div>
                 </div>
 
-                {callType !== "inquiry" && (
+                {callType !== "inquiry" && callType !== "schoolInquiry" && (
                   <p className="caller-label">
                     Incoming Call
                   </p>

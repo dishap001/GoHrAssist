@@ -9,6 +9,7 @@ import inquiryCallAudio from "./assets/Cascade_Demo.mp3";
 import schoolInquiryAudio from "./assets/School_Inquiry.mp3";
 import goaVistaAudio from "./assets/Goa_Vista.mp3";
 import { FaPhoneAlt, FaPhoneSlash } from "react-icons/fa";
+import admissionInquiryAudio from "./assets/AddmissionInquiryDemo.mp3";
 
 const formatTime = (seconds: number) => {
   const mins = Math.floor(seconds / 60)
@@ -26,7 +27,8 @@ type CallType =
   | "sales"
   | "inquiry"
   | "schoolInquiry"
-  | "goaVista";
+  | "goaVista"
+  | "admissionInquiry";
 
 const App = () => {
   const [callAccepted, setCallAccepted] = useState(false);
@@ -50,9 +52,11 @@ const App = () => {
           ? inquiryCallAudio
           : callType === "schoolInquiry"
             ? schoolInquiryAudio
-            : callType === "goaVista"
-              ? goaVistaAudio
-              : AttendInterview;
+            : callType === "admissionInquiry"
+              ? admissionInquiryAudio
+              : callType === "goaVista"
+                ? goaVistaAudio
+                : AttendInterview;
 
   /*
    * Get caller name
@@ -62,7 +66,8 @@ const App = () => {
       ? "Neha Sinha"
       : callType === "inquiry"
         ? "Cascade Training"
-        : callType === "schoolInquiry"
+        : callType === "schoolInquiry" ||
+          callType === "admissionInquiry"
           ? "Greenfield International School"
           : callType === "goaVista"
             ? "Goa Vista"
@@ -71,18 +76,18 @@ const App = () => {
   /*
    * Get dropdown label
    */
- const callTypeLabel =
-  callType === "interview"
-    ? "Inquire interview"
-    : callType === "sales"
-      ? "Sales Call"
-      : callType === "inquiry"
-        ? "Inquiry Call"
-        : callType === "schoolInquiry"
-          ? "School Inquiry"
-          : callType === "goaVista"
-            ? "Flight Reschedule"
-            : "Support Call";
+  const callTypeLabel =
+    callType === "interview"
+      ? "Inquire interview"
+      : callType === "sales"
+        ? "Sales Call"
+        : callType === "inquiry"
+          ? "Inquiry Call"
+          : callType === "schoolInquiry"
+            ? "School Inquiry"
+            : callType === "goaVista"
+              ? "Flight Reschedule"
+              : "Support Call";
   /*
    * Call timer
    */
@@ -254,6 +259,14 @@ const App = () => {
             >
               Flight reshedule
             </div>
+            {/* ADMISSION INQUIRY */}
+            <div
+              className={`dropdown-item ${callType === "admissionInquiry" ? "active" : ""
+                }`}
+              onClick={() => handleCallTypeChange("admissionInquiry")}
+            >
+              Admission Inquiry
+            </div>
 
           </div>
         )}
@@ -278,12 +291,10 @@ const App = () => {
 
                 {callType !== "inquiry" &&
                   callType !== "schoolInquiry" &&
+                  callType !== "admissionInquiry" &&
                   callType !== "goaVista" && (
-                    <p className="caller-label">
-                      Incoming Call
-                    </p>
+                    <p className="caller-label">Incoming Call</p>
                   )}
-
                 <h1 className="caller-name">
                   {callerName}
                 </h1>
@@ -296,10 +307,9 @@ const App = () => {
 
                 {callType !== "inquiry" &&
                   callType !== "schoolInquiry" &&
+                  callType !== "admissionInquiry" &&
                   callType !== "goaVista" && (
-                    <p className="caller-label">
-                      Incoming Call
-                    </p>
+                    <p className="caller-label">Incoming Call</p>
                   )}
 
                 <div className="incoming-actions">

@@ -74,7 +74,7 @@ const App = () => {
           callType === "admissionInquiry"
           ? "Greenfield International School"
           : callType === "loanSupport"
-            ? "Loan Support service"
+            ? "Loan Support Service"
             : callType === "goaVista"
               ? "Goa Vista"
               : "Elvora Electronics";

@@ -10,6 +10,7 @@ import schoolInquiryAudio from "./assets/School_Inquiry.mp3";
 import goaVistaAudio from "./assets/Goa_Vista.mp3";
 import { FaPhoneAlt, FaPhoneSlash } from "react-icons/fa";
 import admissionInquiryAudio from "./assets/AddmissionInquiryDemo.mp3";
+import loanSupportAudio from "./assets/UnicoHFDemo1.mp3";
 
 const formatTime = (seconds: number) => {
   const mins = Math.floor(seconds / 60)
@@ -28,7 +29,8 @@ type CallType =
   | "inquiry"
   | "schoolInquiry"
   | "goaVista"
-  | "admissionInquiry";
+  | "admissionInquiry"
+  | "loanSupport";
 
 const App = () => {
   const [callAccepted, setCallAccepted] = useState(false);
@@ -56,7 +58,9 @@ const App = () => {
               ? admissionInquiryAudio
               : callType === "goaVista"
                 ? goaVistaAudio
-                : AttendInterview;
+                : callType === "loanSupport"
+                  ? loanSupportAudio
+                  : AttendInterview;
 
   /*
    * Get caller name
@@ -69,9 +73,11 @@ const App = () => {
         : callType === "schoolInquiry" ||
           callType === "admissionInquiry"
           ? "Greenfield International School"
-          : callType === "goaVista"
-            ? "Goa Vista"
-            : "Elvora Electronics";
+          : callType === "loanSupport"
+            ? "Loan Support service"
+            : callType === "goaVista"
+              ? "Goa Vista"
+              : "Elvora Electronics";
 
   /*
    * Get dropdown label
@@ -85,9 +91,13 @@ const App = () => {
           ? "Inquiry Call"
           : callType === "schoolInquiry"
             ? "School Inquiry"
-            : callType === "goaVista"
-              ? "Flight Reschedule"
-              : "Support Call";
+            : callType === "admissionInquiry"
+              ? "Admission Inquiry"
+              : callType === "loanSupport"
+                ? "Loan service"
+                : callType === "goaVista"
+                  ? "Flight Reschedule"
+                  : "Support Call";
   /*
    * Call timer
    */
@@ -267,6 +277,14 @@ const App = () => {
             >
               Admission Inquiry
             </div>
+            {/* LOAN SERVICE */}
+            <div
+              className={`dropdown-item ${callType === "loanSupport" ? "active" : ""
+                }`}
+              onClick={() => handleCallTypeChange("loanSupport")}
+            >
+              Loan service
+            </div>
 
           </div>
         )}
@@ -292,7 +310,8 @@ const App = () => {
                 {callType !== "inquiry" &&
                   callType !== "schoolInquiry" &&
                   callType !== "admissionInquiry" &&
-                  callType !== "goaVista" && (
+                  callType !== "goaVista" &&
+                  callType !== "loanSupport" && (
                     <p className="caller-label">Incoming Call</p>
                   )}
                 <h1 className="caller-name">
@@ -308,7 +327,8 @@ const App = () => {
                 {callType !== "inquiry" &&
                   callType !== "schoolInquiry" &&
                   callType !== "admissionInquiry" &&
-                  callType !== "goaVista" && (
+                  callType !== "goaVista" &&
+                  callType !== "loanSupport" && (
                     <p className="caller-label">Incoming Call</p>
                   )}
 
